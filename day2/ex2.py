@@ -11,11 +11,17 @@ def get_file_content(filepath: str) -> str:
 def is_valid(id: int) -> bool:
     """ Check if the given id is valid """
     prev: str = ""
-    id_ = str(id)
-    for index, c in enumerate(id_):
-        if id_[index:] == prev:
-            return False
+    id_ : str = str(id)
+    summup: int = 0
+    for c in id_[: round((len(id_) - 1) / 2 + 0.5)]:
+        summup = 0
         prev += c
+        for i in range(1, len(id_) // len(prev)):
+            if prev == id_[i * len(prev): (i + 1) * len(prev)]:
+                summup += 1
+        if summup == len([i for i in range(1, len(id_) // len(prev))]) and summup != 0 and not len(id_) % len(prev):
+            return False
+
     return True
 
 def get_sum_of_invalid_ids(filepath: str) -> int:
@@ -31,9 +37,10 @@ def get_sum_of_invalid_ids(filepath: str) -> int:
         tranges: list[str] = i.split("-")
         for id in range(int(tranges[0]), int(tranges[1]) + 1):  # +1 to include
             if not is_valid(id):
+                print(id)
                 sigma += id
     return sigma
 
 if __name__ == "__main__":
     result = get_sum_of_invalid_ids("day2/input.txt")
-    print(result)
+    print(f"=> {result}")
