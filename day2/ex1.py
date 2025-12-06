@@ -3,7 +3,6 @@
 def get_file_content(filepath: str) -> str:
     """ Get the plain text contained in a file """
     to_return: str = None
-
     with open(filepath, "r") as f:
         to_return = f.read()
     return to_return
