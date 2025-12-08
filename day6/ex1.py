@@ -18,7 +18,7 @@ def create_ops(lines: list[str]) -> list[list[str]]:
         if i == 0:
             ops = [[] for _ in range(len(line))]
         for j, term in enumerate(line):
-           ops[j].append(term)  
+            ops[j].append(term)  
     return ops
 
 def do_op(nums: list[str], op: str) -> int:
