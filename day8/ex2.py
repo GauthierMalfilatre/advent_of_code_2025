@@ -1,4 +1,4 @@
-## Advent of Code day8 : Ex1 - Gauthier Malfilatre
+## Advent of Code day8 : Ex2 - Gauthier Malfilatre
 
 def get_file_lines(filepath: str) -> list[str]:
     """ Return a file lines in a list of str """
@@ -52,10 +52,17 @@ def create_chains(lines: list[tuple[int]]) -> int:
     reseaus : list[list[tuple[int]]] = []
     summup  : int                    = 1
     touched : bool                   = False
-    j       : int                    = 0
-    while j < 1000:
+    indexs  : any                    = None
+    j = 0 
+    while True:
+        if len(reseaus) == 1 and len(reseaus[0]) == len(lines):
+            break
         touched = False
         closest, indexs, dis = find_closest_box(lines, excludes)
+        if closest == None:
+            break
+        if not j % 1000:
+            print(reseaus)
         excludes.append(indexs)
         for i, r in enumerate(reseaus):
             if indexs[0] in r and indexs[1] in r:
@@ -92,10 +99,12 @@ def create_chains(lines: list[tuple[int]]) -> int:
         if not touched:
             reseaus.append(list(indexs))
         j += 1
+
+    print(lines[indexs[0]], lines[indexs[1]])
     sort_reseaus(reseaus)
     print(reseaus)
     if len(reseaus) < 3:
-        return summup 
+        return lines[indexs[0]][0] * lines[indexs[1]][0]
     for i in range(3):
         summup *= len(reseaus[i])
     return summup
