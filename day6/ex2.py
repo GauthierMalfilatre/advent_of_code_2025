@@ -1,4 +1,4 @@
-## Advent of Code day6 : Ex1 - Gauthier Malfilatre
+## Advent of Code day6 : Ex2 - Gauthier Malfilatre
 
 def get_file_lines(filepath: str) -> list[str]:
     """ Return a file lines in a list of str """

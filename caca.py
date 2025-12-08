@@ -1,7 +1,5 @@
 ## Advent of Code day8 : Ex2 - Gauthier Malfilatre
 
-import time
-
 def get_file_lines(filepath: str) -> list[str]:
     """ Return a file lines in a list of str """
     lines: list[str] = []
@@ -30,7 +28,7 @@ def find_closest_box(boxs: list[tuple[int]], excludes: list[tuple[int, int]] = [
             if i1 == i2:
                 continue
             temp = get_distance(box, box_)
-            if (closest == None or temp < closest) and (i1, i2) not in excludes and (i2, i1) not in excludes:
+            if (closest == None or temp < closest)  and (i1, i2) not in excludes and (i2, i1) not in excludes:
                 closest = temp
                 iclosest = (i1, i2)
     return (boxs[iclosest[0]], boxs[iclosest[1]]), iclosest, closest
@@ -55,17 +53,22 @@ def create_chains(lines: list[tuple[int]]) -> int:
     summup  : int                    = 1
     touched : bool                   = False
     indexs  : any                    = None
-    j = 0
-    now = time.monotonic()
+    j = 0 
+
+    closest, indexs, dis = find_closest_box(lines, [])
+    print(closest)
+    
     while True:
         if len(reseaus) == 1 and len(reseaus[0]) == len(lines):
             break
         touched = False
+    
         closest, indexs, dis = find_closest_box(lines, excludes)
+        print(closest, dis)
         if closest == None:
             break
         if not j % 1000:
-            print(reseaus, f"\n>>>>>>>>>>>> {len(reseaus)} |\n")
+            print(reseaus, f"\n>>>>>>>>>>>> {len(reseaus)} | {len(excludes)}\n")
         excludes.append(indexs)
         for i, r in enumerate(reseaus):
             if indexs[0] in r and indexs[1] in r:
@@ -104,7 +107,6 @@ def create_chains(lines: list[tuple[int]]) -> int:
         j += 1
 
     print(lines[indexs[0]], lines[indexs[1]])
-    print(f"Take {time.monotonic() - now} s.")
     if len(reseaus) < 3:
         return lines[indexs[0]][0] * lines[indexs[1]][0]
     sort_reseaus(reseaus)
@@ -114,7 +116,7 @@ def create_chains(lines: list[tuple[int]]) -> int:
     return summup
 
 if __name__ == "__main__":
-    lines: list[str] = get_file_lines("day8/input.txt")
+    lines: list[str] = get_file_lines("sha.txt")
     lines = to_xyz(lines)
     result: int = create_chains(lines)
     print(result)
