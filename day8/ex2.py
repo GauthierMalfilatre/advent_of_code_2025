@@ -1,5 +1,4 @@
 ## Advent of Code day8 : Ex2 - Gauthier Malfilatre
-
 import time
 
 def get_file_lines(filepath: str) -> list[str]:
